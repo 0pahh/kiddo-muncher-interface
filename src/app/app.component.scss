@@ -7,10 +7,9 @@
   justify-content: center;
   align-items: center;
   height: 85vh;
-  pute: var(--size);
 
   $board-size: 80vh;
-  $tile-size: $board-size / var(--size);
+  $tile-size: $board-size / 6;
   $tile-border-width: 2px;
 
   .board {
