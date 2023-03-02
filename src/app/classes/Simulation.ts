@@ -23,8 +23,10 @@ export class Simulation {
     this.start = true;
     for (let i = 0; i < this.nbTurns; i++) {
       this.data.forEach((entity) => {
+        //Ogre is moving/attacking
         if (entity instanceof Ogre) {
           let hasMoved = false;
+
           const aroundEntities = this.getEntitiesAround(entity); // Get entities around the ogre
 
           const directions = ['up', 'down', 'left', 'right'];
@@ -46,9 +48,11 @@ export class Simulation {
           if (!hasMoved) {
             const forbiddenMoves: ('up' | 'down' | 'left' | 'right')[] = [];
             for (const id in aroundEntities) {
+              const entity = aroundEntities[id];
               if (
-                aroundEntities[id] !== null &&
-                aroundEntities[id] instanceof Decor
+                entity !== null &&
+                ((entity instanceof Decor && !entity.traversable) ||
+                  (entity instanceof Kiddo && !(entity instanceof DeadKiddo)))
               )
                 forbiddenMoves.push(id as 'up' | 'down' | 'left' | 'right');
             }
@@ -71,16 +75,20 @@ export class Simulation {
             if (move) entity.move(move);
           }
         }
-        if (entity instanceof Kiddo && entity instanceof DeadKiddo === false) {
+        //Kiddo is moving
+        if (entity instanceof Kiddo && !(entity instanceof DeadKiddo)) {
           const aroundEntities = this.getEntitiesAround(entity); // Get entities around the kiddo
-
+          console.log(aroundEntities);
           if (entity.movementType === 'stay') return;
 
           const forbiddenMoves: ('up' | 'down' | 'left' | 'right')[] = [];
           for (const id in aroundEntities) {
+            const entity = aroundEntities[id];
             if (
-              aroundEntities[id] !== null &&
-              aroundEntities[id] instanceof Decor
+              entity !== null &&
+              ((entity instanceof Decor && !entity.traversable) ||
+                entity instanceof Ogre ||
+                (entity instanceof Kiddo && !(entity instanceof DeadKiddo)))
             )
               forbiddenMoves.push(id as 'up' | 'down' | 'left' | 'right');
           }
@@ -112,48 +120,41 @@ export class Simulation {
         }
 
         this.board.console = this.board.generateBlankConsole();
-        for (const data of this.data) {
-          const entitiesOnCase = this.data.filter(
-            (entity) => entity.position === data.position
-          );
-          if (entitiesOnCase.length > 1) {
-            const ogre = entitiesOnCase.find(
-              (entity) => entity instanceof Ogre
-            );
-            const kiddo = entitiesOnCase.find(
-              (entity) => entity instanceof Kiddo
-            );
-            if (ogre) {
-              this.board.console[data.position.x][data.position.y] =
-                ogre.symbol;
-            } else if (kiddo) {
-              this.board.console[data.position.x][data.position.y] =
-                kiddo.symbol;
-            }
+        const grouped: { [key: string]: (Entity | Decor)[] } = {};
+        for (const element of this.data) {
+          const { position } = element;
+          const key = `${position.x},${position.y}`;
+          if (grouped[key]) {
+            grouped[key].push(element);
           } else {
-            this.board.console[data.position.x][data.position.y] = data.symbol;
+            grouped[key] = [element];
           }
+        }
 
-          // console.log(
-          //   this.data.some((entity) => entity.position === data.position)
-          // );
-
-          // if (
-          //   data instanceof DeadKiddo ||
-          //   (data instanceof Decor && data.traversable)
-          // ) {
-          //   const existingEntity = this.data.find(
-          //     (entity) =>
-          //       entity.position.x === data.position.x &&
-          //       entity.position.y === data.position.y &&
-          //       entity !== data
-          //   );
-          //   if (existingEntity) continue;
-          //   else {
-          //     this.board.console[data.position.x][data.position.y] = data.symbol;
-          //   }
-          // }
-          // this.board.console[data.position.x][data.position.y] = data.symbol;
+        for (let key in grouped) {
+          if (grouped[key].length > 1) {
+            const ogre = grouped[key].find((e) => e instanceof Ogre);
+            const kiddoAlive = grouped[key].find(
+              (e) => e instanceof Kiddo && !(e instanceof DeadKiddo)
+            );
+            const kiddoDead = grouped[key].find((e) => e instanceof DeadKiddo);
+            const decors = grouped[key].find((e) => e instanceof Decor);
+            if (ogre) {
+              this.board.console[ogre.position.x][ogre.position.y] =
+                ogre.symbol;
+            } else if (kiddoAlive)
+              this.board.console[kiddoAlive.position.x][kiddoAlive.position.y] =
+                kiddoAlive.symbol;
+            else if (kiddoDead)
+              this.board.console[kiddoDead.position.x][kiddoDead.position.y] =
+                kiddoDead.symbol;
+            else if (decors)
+              this.board.console[decors.position.x][decors.position.y] =
+                decors.symbol;
+          } else
+            this.board.console[grouped[key][0].position.x][
+              grouped[key][0].position.y
+            ] = grouped[key][0].symbol;
         }
         simulationArray.push(this.board.console);
       });
