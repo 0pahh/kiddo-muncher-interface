@@ -1,0 +1,39 @@
+// Set variables for board size and tile size
+
+// Create the board container element
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  pute: var(--size);
+
+  $board-size: 80vh;
+  $tile-size: $board-size / var(--size);
+  $tile-border-width: 2px;
+
+  .board {
+    width: $board-size;
+    height: $board-size;
+    display: flex;
+    flex-wrap: wrap;
+
+    // Create the tile elements and assign colors
+    // Set variables for tile colors
+    $light-tile: rgb(75, 224, 29);
+    $dark-tile: #808080;
+    // Calculate the maximum tile size taking into account the added border width
+    $max-tile-size: calc($tile-size - 2 * $tile-border-width);
+    .tile {
+      width: $max-tile-size;
+      height: $max-tile-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $light-tile;
+      font-size: $tile-size / 2;
+      border: $tile-border-width solid $dark-tile;
+    }
+  }
+}

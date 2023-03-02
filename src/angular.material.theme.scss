@@ -1,0 +1,69 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+@import "create-palette.scss";
+
+$primary-color: rgb(75, 224, 29);
+$accent-color: rgb(147, 147, 21);
+$warn-color: rgb(191, 0, 77);
+
+$primary-palette: createPalette($primary-color);
+$accent-palette: createPalette($accent-color);
+$warn-palette: createPalette($warn-color);
+
+$my-primary: mat.define-palette($primary-palette);
+$my-accent: mat.define-palette($accent-palette);
+$my-warn: mat.define-palette($warn-palette);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// Emit theme-dependent styles for common features used across multiple components.
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
+
+.mat-raised-button,
+.mat-stroked-button,
+.mat-flat-button {
+  padding: 0 1.15em;
+  margin: 0 0.65em;
+  min-width: 3em;
+  line-height: 36.4px;
+}
+
+.mat-standard-chip {
+  padding: 0.5em 0.85em;
+  min-height: 2.5em;
+}
+
+.material-icons {
+  font-size: 24px;
+  font-family: "Material Icons", "Material Icons";
+  .mat-badge-content {
+    font-family: "Roboto";
+  }
+}
+.mdc-form-field > label {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.mat-mdc-checkbox label {
+  cursor: pointer;
+  font-size: 10px !important;
+  color: var(--second) !important;
+}
+
+.mdc-text-field {
+  border-radius: 8px !important;
+}
