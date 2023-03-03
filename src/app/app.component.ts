@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Decor } from './classes/Decor';
-import { Entity, Kiddo } from './classes/Entity';
+import { DeadKiddo, Entity, Kiddo } from './classes/Entity';
 import { Simulation } from './classes/Simulation';
 
 @Component({
@@ -11,10 +11,11 @@ import { Simulation } from './classes/Simulation';
 export class AppComponent implements OnInit {
   title = 'kiddo-muncher-interface';
   simulation = new Simulation();
-  simulationData: string[][] = [];
+  simulationData: (Entity | Decor)[][] = [];
   start = false;
   boardSize = 6;
   interval: any;
+  aliveChildrens!: number;
 
   ngOnInit(): void {
     this.simulation.board.setBoardSize(this.boardSize);
@@ -28,15 +29,25 @@ export class AppComponent implements OnInit {
     this.start = !this.start;
     if (this.start) {
       let localSimulation = this.simulation.returnSimulation();
+
       let i = 0;
       this.interval = setInterval(() => {
         if (i === localSimulation.length - 1) {
           clearInterval(this.interval);
-          this.start = false;
+          // this.start = false;
         }
         this.simulationData = localSimulation[i];
+        this.aliveChildrens = localSimulation[i]
+          .flat()
+          .filter(
+            (obj) => obj instanceof Kiddo && obj instanceof DeadKiddo === false
+          ).length; // Filter for instances of kiddo // Get the length of the filtered array
+        if (this.aliveChildrens === 0) {
+          clearInterval(this.interval);
+          // this.start = false;
+        }
         i++;
-      }, 250);
+      }, 1000);
     } else {
       this.simulationData = [];
 

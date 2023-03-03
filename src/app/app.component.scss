@@ -1,4 +1,12 @@
 // Set variables for board size and tile size
+$board-size: 80vh;
+$board-max-width-size: 948px;
+$tile-size: $board-size / var(--nbTiles);
+$tile-border-width: 2px;
+$light-tile: rgb(147, 147, 21);
+$dark-tile: #808080;
+
+$max-tile-size: calc($tile-size - 2 * $tile-border-width);
 
 // Create the board container element
 
@@ -7,12 +15,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 85vh;
+  height: 90vh;
 
-  $board-size: 80vh;
-  $board-max-width-size: 400px;
-  $tile-size: $board-size / var(--nbTiles);
-  $tile-border-width: 2px;
+  padding: 2px;
+  color: rgb(147, 147, 21);
+  font-size: 1rem;
   .board-size-slider {
     display: flex;
     justify-content: center;
@@ -21,24 +28,35 @@
     color: rgb(147, 147, 21);
   }
   .board {
-    width: $board-size;
-    height: $board-size;
-    display: flex;
-    flex-wrap: wrap;
     font-size: calc($tile-size / 2);
 
-    $light-tile: rgb(147, 147, 21);
-    $dark-tile: #808080;
+    display: grid;
+    grid-template-columns: repeat(var(--nbTiles), 1fr);
+    grid-template-rows: repeat(var(--nbTiles), 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 
-    $max-tile-size: calc($tile-size - 2 * $tile-border-width);
     .tile {
-      width: $max-tile-size;
-      height: $max-tile-size;
+      width: 100vh / var(--nbTiles);
+      height: 100vh / var(--nbTiles);
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: $light-tile;
       border: $tile-border-width solid $dark-tile;
+      font-size: 150%;
+
+      @media (max-width: 1024px) {
+        font-size: 100%;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 85%;
+      }
+
+      @media (max-width: 500px) {
+        font-size: 45%;
+      }
     }
   }
 }

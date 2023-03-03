@@ -21,6 +21,10 @@ export class Ogre implements Entity {
     return deadKiddo;
   }
   move(direction: 'up' | 'down' | 'left' | 'right') {
+    const randomNum: number = Math.floor(Math.random() * 4);
+    if (randomNum === 0) {
+      return; // Stay random
+    }
     switch (direction) {
       case 'up':
         this.position.x--;

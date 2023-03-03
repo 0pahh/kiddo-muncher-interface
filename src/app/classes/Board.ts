@@ -1,15 +1,18 @@
+import { Decor } from './Decor';
+import { Entity } from './Entity';
+
 export class Board {
   public nbRows = 8;
   public nbCols = 8;
 
-  public console!: (string | null)[][];
+  public console!: ((Entity | Decor) | null)[][];
 
   constructor() {
     this.console = this.generateBlankConsole();
   }
 
-  public generateBlankConsole = (): (string | null)[][] => {
-    const consoleData: (string | null)[][] = [];
+  public generateBlankConsole = (): ((Entity | Decor) | null)[][] => {
+    const consoleData: ((Entity | Decor) | null)[][] = [];
 
     for (let i = 0; i < this.nbRows; i++) {
       consoleData[i] = [];

@@ -6,7 +6,7 @@ import { DeadKiddo, Entity, Kiddo, KiddoFactory, Ogre } from './Entity';
 
 export class Simulation {
   start = false;
-  nbTurns = 10;
+  nbTurns = 100;
   board = new Board();
   data: (Entity | Decor)[] = [];
 
@@ -17,7 +17,7 @@ export class Simulation {
     this.generateDecors(); // Generate Decors, 10% to 40% of the board wo ogre
   };
 
-  public returnSimulation = (): any[][] => {
+  returnSimulation = (): any[][] => {
     const simulationArray: any[][] = [];
     this.generateData();
     this.start = true;
@@ -140,24 +140,22 @@ export class Simulation {
             const kiddoDead = grouped[key].find((e) => e instanceof DeadKiddo);
             const decors = grouped[key].find((e) => e instanceof Decor);
             if (ogre) {
-              this.board.console[ogre.position.x][ogre.position.y] =
-                ogre.symbol;
+              this.board.console[ogre.position.x][ogre.position.y] = ogre;
             } else if (kiddoAlive)
               this.board.console[kiddoAlive.position.x][kiddoAlive.position.y] =
-                kiddoAlive.symbol;
+                kiddoAlive;
             else if (kiddoDead)
               this.board.console[kiddoDead.position.x][kiddoDead.position.y] =
-                kiddoDead.symbol;
+                kiddoDead;
             else if (decors)
-              this.board.console[decors.position.x][decors.position.y] =
-                decors.symbol;
+              this.board.console[decors.position.x][decors.position.y] = decors;
           } else
             this.board.console[grouped[key][0].position.x][
               grouped[key][0].position.y
-            ] = grouped[key][0].symbol;
+            ] = grouped[key][0];
         }
-        simulationArray.push(this.board.console);
       });
+      simulationArray.push(this.board.console);
     }
     return simulationArray;
   };

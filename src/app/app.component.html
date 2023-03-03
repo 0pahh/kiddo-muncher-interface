@@ -3,6 +3,9 @@
 </mat-toolbar>
 
 <div class="container" [style]="{ '--nbTiles': simulation.board.nbRows }">
+  <ng-container *ngIf="start"
+    >Nombres d'enfants en vie : {{ aliveChildrens }}</ng-container
+  >
   <div class="board-size-slider" *ngIf="!start">
     Taille du plateau : {{ boardSize }}
     <mat-slider
@@ -32,7 +35,9 @@
 
   <div class="board" *ngIf="start">
     <ng-container *ngFor="let row of simulationData">
-      <div class="tile" *ngFor="let cell of row">{{ cell }}</div>
+      <div class="tile" *ngFor="let cell of row">
+        {{ cell?.symbol || " " }}
+      </div>
     </ng-container>
   </div>
 </div>
