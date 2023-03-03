@@ -244,4 +244,8 @@ export class Simulation {
     );
     return entities;
   };
+
+  public setTurnsMax = (turns: number): void => {
+    this.nbTurns = turns;
+  };
 }

@@ -6,11 +6,11 @@
   <ng-container *ngIf="start"
     >Nombres d'enfants en vie : {{ aliveChildrens }}</ng-container
   >
-  <div class="board-size-slider" *ngIf="!start">
+  <div class="param-slider" *ngIf="!start">
     Taille du plateau : {{ boardSize }}
     <mat-slider
       color="accent"
-      [max]="16"
+      [max]="12"
       [min]="3"
       [step]="1"
       [discrete]="true"
@@ -24,6 +24,41 @@
     </mat-slider>
   </div>
 
+  <div class="param-slider" *ngIf="!start">
+    Nombre de tour maximum : {{ nbTurnMaximum }}
+    <mat-slider
+      color="accent"
+      [max]="150"
+      [min]="10"
+      [step]="10"
+      [discrete]="true"
+      [showTickMarks]="true"
+    >
+      <input
+        matSliderThumb
+        [(ngModel)]="nbTurnMaximum"
+        (ngModelChange)="setTurnsMax($event)"
+      />
+    </mat-slider>
+  </div>
+  <div class="param-slider" *ngIf="!start">
+    Temps entre chaque tour (ms) : {{ turnTime }}
+    <mat-slider
+      color="accent"
+      [max]="2500"
+      [min]="50"
+      [step]="100"
+      [discrete]="true"
+      [showTickMarks]="true"
+    >
+      <input
+        matSliderThumb
+        [(ngModel)]="turnTime"
+        (ngModelChange)="setTurnTime($event)"
+      />
+    </mat-slider>
+  </div>
+
   <button
     mat-raised-button
     color="primary"
@@ -32,8 +67,25 @@
   >
     Lancer une simulation
   </button>
-
-  <div class="board" *ngIf="start">
+  <button
+    mat-raised-button
+    color="primary"
+    class="reload-button"
+    (click)="startSimulation()"
+    *ngIf="finished"
+  >
+    Relancer une simulation avec les mêmes paramètres
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="back-button"
+    (click)="start = false; finished = false"
+    *ngIf="finished"
+  >
+    Changer les paramètres
+  </button>
+  <div class="board" *ngIf="start" [ngClass]="finished ? ' stopped' : null">
     <ng-container *ngFor="let row of simulationData">
       <div class="tile" *ngFor="let cell of row">
         {{ cell?.symbol || " " }}

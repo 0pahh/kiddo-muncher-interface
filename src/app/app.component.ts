@@ -16,17 +16,31 @@ export class AppComponent implements OnInit {
   boardSize = 6;
   interval: any;
   aliveChildrens!: number;
-
+  finished = false;
+  nbTurnMaximum = 50;
+  turnTime = 500;
   ngOnInit(): void {
     this.simulation.board.setBoardSize(this.boardSize);
   }
   setBoardSize(value: number) {
     if (value < 3) value = 3;
-    else if (value > 16) value = 16;
+    else if (value > 12) value = 12;
     this.simulation.board.setBoardSize(value);
   }
+  setTurnsMax(value: number) {
+    if (value < 10) value = 10;
+    else if (value > 150) value = 150;
+    this.simulation.setTurnsMax(value);
+  }
+  setTurnTime(value: number) {
+    if (value < 50) value = 50;
+    else if (value > 2500) value = 2500;
+    this.turnTime = value;
+  }
   startSimulation(): void {
-    this.start = !this.start;
+    this.simulationData = [];
+    this.finished = false;
+    this.start = true;
     if (this.start) {
       let localSimulation = this.simulation.returnSimulation();
 
@@ -34,6 +48,7 @@ export class AppComponent implements OnInit {
       this.interval = setInterval(() => {
         if (i === localSimulation.length - 1) {
           clearInterval(this.interval);
+          this.finished = true;
           // this.start = false;
         }
         this.simulationData = localSimulation[i];
@@ -44,10 +59,11 @@ export class AppComponent implements OnInit {
           ).length; // Filter for instances of kiddo // Get the length of the filtered array
         if (this.aliveChildrens === 0) {
           clearInterval(this.interval);
+          this.finished = true;
           // this.start = false;
         }
         i++;
-      }, 1000);
+      }, this.turnTime);
     } else {
       this.simulationData = [];
 
