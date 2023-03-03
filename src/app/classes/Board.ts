@@ -1,6 +1,6 @@
 export class Board {
-  public nbRows = 6;
-  public nbCols = 6;
+  public nbRows = 8;
+  public nbCols = 8;
 
   public console!: (string | null)[][];
 
@@ -18,5 +18,11 @@ export class Board {
       }
     }
     return consoleData;
+  };
+
+  public setBoardSize = (size: number): void => {
+    this.nbRows = size;
+    this.nbCols = size;
+    this.console = this.generateBlankConsole();
   };
 }

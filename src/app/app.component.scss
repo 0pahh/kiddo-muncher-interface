@@ -4,25 +4,32 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 85vh;
 
   $board-size: 80vh;
-  $tile-size: $board-size / 6;
+  $board-max-width-size: 400px;
+  $tile-size: $board-size / var(--nbTiles);
   $tile-border-width: 2px;
-
+  .board-size-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(147, 147, 21);
+  }
   .board {
     width: $board-size;
     height: $board-size;
     display: flex;
     flex-wrap: wrap;
+    font-size: calc($tile-size / 2);
 
-    // Create the tile elements and assign colors
-    // Set variables for tile colors
-    $light-tile: rgb(75, 224, 29);
+    $light-tile: rgb(147, 147, 21);
     $dark-tile: #808080;
-    // Calculate the maximum tile size taking into account the added border width
+
     $max-tile-size: calc($tile-size - 2 * $tile-border-width);
     .tile {
       width: $max-tile-size;
@@ -31,7 +38,6 @@
       justify-content: center;
       align-items: center;
       background-color: $light-tile;
-      font-size: $tile-size / 2;
       border: $tile-border-width solid $dark-tile;
     }
   }

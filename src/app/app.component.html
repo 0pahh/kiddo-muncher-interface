@@ -1,8 +1,26 @@
 <mat-toolbar color="warn">
-  <mat-toolbar-row> <span>Kiddo Muncher</span></mat-toolbar-row>
+  <mat-toolbar-row><span>Kiddo Muncher</span></mat-toolbar-row>
 </mat-toolbar>
 
-<div class="container" [style]="{ size: simulation.board.nbRows }">
+<div class="container" [style]="{ '--nbTiles': simulation.board.nbRows }">
+  <div class="board-size-slider" *ngIf="!start">
+    Taille du plateau : {{ boardSize }}
+    <mat-slider
+      color="accent"
+      [max]="16"
+      [min]="3"
+      [step]="1"
+      [discrete]="true"
+      [showTickMarks]="true"
+    >
+      <input
+        matSliderThumb
+        [(ngModel)]="boardSize"
+        (ngModelChange)="setBoardSize($event)"
+      />
+    </mat-slider>
+  </div>
+
   <button
     mat-raised-button
     color="primary"
@@ -13,7 +31,7 @@
   </button>
 
   <div class="board" *ngIf="start">
-    <ng-container *ngFor="let row of simulationDataSymbols">
+    <ng-container *ngFor="let row of simulationData">
       <div class="tile" *ngFor="let cell of row">{{ cell }}</div>
     </ng-container>
   </div>
