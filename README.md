@@ -1,27 +1,33 @@
-# KiddoMuncherInterface
+# Kiddo Muncher
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+Ce projet simule le mouvement et les habitudes d'alimentation aléatoires d'un ogre dans une console JavaScript. Le projet est conçu pour aider à apprendre et à comprendre les patterns de conception à l'aide de TypeScript.
 
-## Development server
+## Accès au projet
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Le rendu visuel du projet est accessible pour à l'adresse suivante : [https://thierry-angel.fr/kiddo-muncher/](https://thierry-angel.fr/kiddo-muncher/)
 
-## Code scaffolding
+## Pour commencer
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clonez le dépôt sur votre machine locale :
 
-## Build
+git clone https://github.com/0pahh/kiddo-muncher-interface.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. Installez les dépendances.
 
-## Running unit tests
+## Lancement du projet
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Pour lancer le projet, utilisez la commande suivante : `npm start`
 
-## Running end-to-end tests
+Cela exécutera le projet sur l'URL `http://localhost:4200`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Contribuer
 
-## Further help
+Nous acceptons les contributions au projet Kiddo Muncher. Si vous souhaitez contribuer, veuillez forker le dépôt et soumettre une pull request avec vos modifications.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Auteur
+
+Ce projet a été développé par [0pahh] ([@0pahh](https://github.com/0pahh)).
+
+## Licence
+
+Ce projet est sous licence MIT - consultez le fichier [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT) pour plus de détails.
