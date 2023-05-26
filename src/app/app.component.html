@@ -3,9 +3,30 @@
 </mat-toolbar>
 
 <div class="container" [style]="{ '--nbTiles': simulation.board.nbRows }">
-  <ng-container *ngIf="start"
-    >Nombres d'enfants en vie : {{ aliveChildrens }}</ng-container
-  >
+  <div class="remaining-kiddos" *ngIf="start">
+    Nombres d'enfants en vie : {{ aliveChildrens }}
+  </div>
+  <div class="remaining-time" *ngIf="start">
+    Temps restant maximum :
+    {{ 0 / 1000 | number : "1.2-2" }} s
+  </div>
+  <div class="remaining-turns" *ngIf="start">
+    Nombres de tours restant :
+    {{
+      simulation.nbTurns -
+        (actualTurn + (actualTurn === simulation.nbTurns ? 0 : 1))
+    }}
+  </div>
+  <div class="infos-container" *ngIf="!start">
+    <p>
+      Ce projet a été réalisé dans le cadre d'un cours sur l'architecture
+      logicielle.
+    </p>
+    <p>
+      Il s'agit d'une simulation d'un ogre qui mange des enfants, les
+      déplacements étant
+    </p>
+  </div>
   <div class="param-slider" *ngIf="!start">
     Taille du plateau : {{ boardSize }}
     <mat-slider
@@ -28,7 +49,7 @@
     Nombre de tour maximum : {{ nbTurnMaximum }}
     <mat-slider
       color="accent"
-      [max]="150"
+      [max]="1000"
       [min]="10"
       [step]="10"
       [discrete]="true"
@@ -92,4 +113,13 @@
       </div>
     </ng-container>
   </div>
+  <button
+    mat-raised-button
+    color="warn"
+    class="stop-button"
+    (click)="stopSimulation()"
+    *ngIf="start && !finished"
+  >
+    Stop
+  </button>
 </div>

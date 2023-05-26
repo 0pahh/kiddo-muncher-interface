@@ -1,5 +1,5 @@
 // Set variables for board size and tile size
-$board-size: 80vh;
+$board-size: 100vh;
 $board-max-width-size: 948px;
 $tile-size: $board-size / var(--nbTiles);
 $tile-border-width: 2px;
@@ -19,8 +19,18 @@ $max-tile-size: calc($tile-size - 2 * $tile-border-width);
 
   padding: 2px;
   color: rgb(147, 147, 21);
-  font-size: 3rem;
   position: relative;
+  .remaining-kiddos {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+    @media (max-width: 450px) {
+      font-size: 1.25rem;
+    }
+  }
+
   .reload-button {
     position: absolute;
     top: 50%;
@@ -28,6 +38,18 @@ $max-tile-size: calc($tile-size - 2 * $tile-border-width);
     transform: translate(-50%, -50%);
     font-size: 1rem;
     z-index: 1;
+    color: #bf004d;
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 0.675rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 0.5rem;
+    }
   }
   .back-button {
     position: absolute;
@@ -36,6 +58,71 @@ $max-tile-size: calc($tile-size - 2 * $tile-border-width);
     transform: translate(-50%, -50%);
     font-size: 1rem;
     z-index: 1;
+    color: #bf004d;
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 0.675rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 0.5rem;
+    }
+  }
+
+  .stop-button {
+    position: absolute;
+
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    z-index: 1;
+    bottom: 0;
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      bottom: 5%;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 0.675rem;
+      bottom: 20%;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 0.5rem;
+      bottom: 20%;
+    }
+  }
+
+  .infos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #bf004d;
+    font-size: 1.8rem;
+    font-weight: 600;
+    max-width: 75%;
+    height: auto;
+    padding-bottom: 2.5rem;
+    @media (max-width: 1024px) {
+      font-size: 100%;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 85%;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 50%;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .param-slider {
@@ -64,7 +151,6 @@ $max-tile-size: calc($tile-size - 2 * $tile-border-width);
       align-items: center;
       background-color: $light-tile;
       border: $tile-border-width solid $dark-tile;
-      font-size: 150%;
 
       @media (max-width: 1024px) {
         font-size: 100%;
@@ -77,10 +163,19 @@ $max-tile-size: calc($tile-size - 2 * $tile-border-width);
       @media (max-width: 500px) {
         font-size: 45%;
       }
+
+      @media (max-width: 320px) {
+        font-size: 37.5%;
+      }
     }
 
     &.stopped {
       filter: grayscale(1);
     }
+
+    // @max-width: $board-max-width-size {
+    //   width: $board-size;
+    //   height: $board-size;
+    // }
   }
 }

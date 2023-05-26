@@ -23,6 +23,7 @@ export class Simulation {
     this.start = true;
     for (let i = 0; i < this.nbTurns; i++) {
       this.data.forEach((entity) => {
+        if (entity instanceof Decor) return;
         //Ogre is moving/attacking
         if (entity instanceof Ogre) {
           let hasMoved = false;
@@ -78,7 +79,7 @@ export class Simulation {
         //Kiddo is moving
         if (entity instanceof Kiddo && !(entity instanceof DeadKiddo)) {
           const aroundEntities = this.getEntitiesAround(entity); // Get entities around the kiddo
-          console.log(aroundEntities);
+
           if (entity.movementType === 'stay') return;
 
           const forbiddenMoves: ('up' | 'down' | 'left' | 'right')[] = [];
